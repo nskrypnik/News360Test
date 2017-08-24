@@ -3,8 +3,8 @@ using System.IO;
 
 namespace News360test
 {
-	class MainClass
-	{
+    class MainClass
+    {
 
         public static void Main(string[] args)
         {
@@ -12,7 +12,8 @@ namespace News360test
             EquationNormalizer normalizer = new EquationNormalizer();
 
             // check parameters
-            if (args.Length > 0) {
+            if (args.Length > 0)
+            {
                 filename = args[0];
                 // load from file mode
                 MainClass.LoadFromFile(filename, normalizer);
@@ -40,7 +41,7 @@ namespace News360test
             }
 
 
-            while((equation = file.ReadLine()) != null)
+            while ((equation = file.ReadLine()) != null)
             {
                 if (equation.Length > 0)
                 {
@@ -56,12 +57,13 @@ namespace News360test
 
         private static void StartInteractive(EquationNormalizer normalizer)
         {
-            while(true) {
+            while (true)
+            {
                 Console.WriteLine("Please enter an equation below:");
                 Console.Write("> ");
                 string equation = Console.ReadLine();
                 Console.WriteLine("\n" + normalizer.Normalize(equation) + "\n");
             }
         }
-	}
+    }
 }

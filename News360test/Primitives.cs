@@ -57,13 +57,13 @@ namespace News360test
     }
 
 
-    public class Expression 
+    public class Expression
     {
         private RawExpression rawExpression;
         public List<Summand> summands = new List<Summand>(); // array of summands in expression
 
         public Expression()
-        {}
+        { }
 
         public Expression(List<Summand> summands)
         {
@@ -111,19 +111,19 @@ namespace News360test
 
     public class Multiplier
     {
-        
+
         public List<Expression> expressions; // array of expressions in multiplier
         private RawMultiplier rawMultiplier;
         private int coeff = 1;
 
         public Multiplier()
-        {}
+        { }
 
         public Multiplier(RawMultiplier rawMultiplier)
         {
             this.rawMultiplier = rawMultiplier;
             this.coeff = rawMultiplier.coeff;
-            this.Parse(rawMultiplier); 
+            this.Parse(rawMultiplier);
         }
 
         public void Parse(RawMultiplier rawMultiplier)
@@ -208,19 +208,19 @@ namespace News360test
         {
             Dictionary<char, int> variables = new Dictionary<char, int>();
             double coeff = first.coeff * second.coeff;
-            foreach (Summand multipliee in new List<Summand>{first, second })
+            foreach (Summand multipliee in new List<Summand> { first, second })
             {
-				foreach (char key in multipliee.variables.Keys)
-				{
-					if (!variables.Keys.Contains(key))
-					{
-						variables.Add(key, multipliee.variables[key]);
-					}
-					else
-					{
-						variables[key] += multipliee.variables[key];
-					}
-				}
+                foreach (char key in multipliee.variables.Keys)
+                {
+                    if (!variables.Keys.Contains(key))
+                    {
+                        variables.Add(key, multipliee.variables[key]);
+                    }
+                    else
+                    {
+                        variables[key] += multipliee.variables[key];
+                    }
+                }
             }
 
             return new Summand(coeff, variables);
@@ -241,7 +241,8 @@ namespace News360test
             int rankInGroup = 0;
             foreach (char variable in variables)
             {
-                if (this.variables.Keys.Contains(variable)) {
+                if (this.variables.Keys.Contains(variable))
+                {
                     power = this.variables[variable];
                 }
                 else

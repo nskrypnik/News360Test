@@ -85,24 +85,24 @@ namespace News360test.Test
         public void TestIterateWithBrackets()
         {
             RawExpression rawExpression1 = new RawExpression(0, "(x + y)(y^2 + 10) - (5)");
-			RawExpressionParser parser = new RawExpressionParser(rawExpression1);
+            RawExpressionParser parser = new RawExpressionParser(rawExpression1);
 
-			List<RawMultiplier> multipliers = parser.Iterator().ToList();
+            List<RawMultiplier> multipliers = parser.Iterator().ToList();
 
             Assert.AreEqual(multipliers.Count, 2);
             Assert.AreEqual(multipliers[0].rawString, "(x + y)(y^2 + 10) ");
             Assert.AreEqual(multipliers[1].rawString, "(5)");
 
             rawExpression1 = new RawExpression(0, "((1 - z) + 4) + (((4))) + ((x))");
-			parser = new RawExpressionParser(rawExpression1);
+            parser = new RawExpressionParser(rawExpression1);
 
             multipliers = parser.Iterator().ToList();
-			Assert.AreEqual(multipliers.Count, 3);
+            Assert.AreEqual(multipliers.Count, 3);
             Assert.AreEqual(multipliers[0].rawString, "((1 - z) + 4) ");
             Assert.AreEqual(multipliers[1].rawString, "(((4))) ");
             Assert.AreEqual(multipliers[2].rawString, "((x))");
 
-		}
+        }
     }
 
     [TestFixture()]
@@ -280,7 +280,7 @@ namespace News360test.Test
         {
             RawMultiplierParser parser = new RawMultiplierParser(new RawMultiplier(6, "((1 - z) + 4)"));
             List<Expression> expressions = parser.Parse();
-		}
+        }
 
         [Test()]
         public void TestDoubleBrackets()
@@ -327,18 +327,18 @@ namespace News360test.Test
             List<char> variables = new List<char>() { 'y', 'x' };
             Assert.AreEqual(s.CalculateIndex(variables, magicNumberLookup), 35);
 
-			magicNumberLookup = new List<long>() { 3, 6, 14 };
-			variables = new List<char>() { 'z', 'y', 'x' };
+            magicNumberLookup = new List<long>() { 3, 6, 14 };
+            variables = new List<char>() { 'z', 'y', 'x' };
             Assert.AreEqual(s.CalculateIndex(variables, magicNumberLookup), 96);
 
             s = new Summand(10, new Dictionary<char, int>());
-			magicNumberLookup = new List<long>() { 3, 6, 14 };
-			variables = new List<char>() { 'z', 'y', 'x' };
+            magicNumberLookup = new List<long>() { 3, 6, 14 };
+            variables = new List<char>() { 'z', 'y', 'x' };
             Assert.AreEqual(s.CalculateIndex(variables, magicNumberLookup), 3);
 
-            s = new Summand(10, new Dictionary<char, int>(){{'x', 3}});
-			magicNumberLookup = new List<long>() { 3, 6, 14, 36};
-			variables = new List<char>() { 'z', 'y', 'x' };
+            s = new Summand(10, new Dictionary<char, int>() { { 'x', 3 } });
+            magicNumberLookup = new List<long>() { 3, 6, 14, 36 };
+            variables = new List<char>() { 'z', 'y', 'x' };
             Assert.AreEqual(s.CalculateIndex(variables, magicNumberLookup), 353);
         }
     }
@@ -432,40 +432,40 @@ namespace News360test.Test
         [Test()]
         public void TestIndexSummands()
         {
-			List<Summand> summands = new List<Summand>()
-			{
-				new Summand(1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
+            List<Summand> summands = new List<Summand>()
+            {
+                new Summand(1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
                 new Summand(-2, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
-				new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
+                new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
                 new Summand(3, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
                 new Summand(3, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
-				new Summand(4, new Dictionary<char, int>() { { 'x', 3 }, { 'y', 1 } }),
-				new Summand(10, new Dictionary<char, int>()),
+                new Summand(4, new Dictionary<char, int>() { { 'x', 3 }, { 'y', 1 } }),
+                new Summand(10, new Dictionary<char, int>()),
                 new Summand(-4, new Dictionary<char, int>())
-			};
+            };
 
-			EquationNormalizer e = new EquationNormalizer();
-			List<Summand> sortedSummands = e.Sort(summands);
+            EquationNormalizer e = new EquationNormalizer();
+            List<Summand> sortedSummands = e.Sort(summands);
 
-			Assert.AreEqual(sortedSummands[0].coeff, 4);
-			Assert.AreEqual(sortedSummands[1].coeff, -1);
-			Assert.AreEqual(sortedSummands[2].coeff, 8);
-			Assert.AreEqual(sortedSummands[3].coeff, 6);
+            Assert.AreEqual(sortedSummands[0].coeff, 4);
+            Assert.AreEqual(sortedSummands[1].coeff, -1);
+            Assert.AreEqual(sortedSummands[2].coeff, 8);
+            Assert.AreEqual(sortedSummands[3].coeff, 6);
         }
 
-        [Test ()]
+        [Test()]
         public void TestAnalyze()
         {
-			List<Summand> summands = new List<Summand>()
-			{
-				new Summand(1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
-				new Summand(-2, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
-				new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
-				new Summand(3, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
-				new Summand(4, new Dictionary<char, int>() { { 'x', 3 }, { 'y', 1 } }),
-				new Summand(10, new Dictionary<char, int>()),
-				new Summand(-4, new Dictionary<char, int>())
-			};
+            List<Summand> summands = new List<Summand>()
+            {
+                new Summand(1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
+                new Summand(-2, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
+                new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
+                new Summand(3, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
+                new Summand(4, new Dictionary<char, int>() { { 'x', 3 }, { 'y', 1 } }),
+                new Summand(10, new Dictionary<char, int>()),
+                new Summand(-4, new Dictionary<char, int>())
+            };
 
             EquationNormalizer e = new EquationNormalizer();
             Tuple<List<char>, int> a = e.Analyze(summands);
@@ -476,29 +476,29 @@ namespace News360test.Test
         [Test()]
         public void TestGenerateEquationString()
         {
-			List<Summand> summands = new List<Summand>()
-			{
+            List<Summand> summands = new List<Summand>()
+            {
                 new Summand(4, new Dictionary<char, int>() { { 'x', 3 }, { 'y', 1 } }),
-				new Summand(-1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
-				new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
-				new Summand(-10, new Dictionary<char, int>())
-			};
+                new Summand(-1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
+                new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
+                new Summand(-10, new Dictionary<char, int>())
+            };
 
-			EquationNormalizer e = new EquationNormalizer();
+            EquationNormalizer e = new EquationNormalizer();
             string output = e.GenerateEquationString(summands);
             Assert.AreEqual(output, "4x^3y - x^2y + 2xz - 10 = 0");
 
-			summands = new List<Summand>()
-			{
-				new Summand(4, new Dictionary<char, int>() { { 'x', 3 }, { 'y', 1 } }),
-				new Summand(-1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
-				new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
+            summands = new List<Summand>()
+            {
+                new Summand(4, new Dictionary<char, int>() { { 'x', 3 }, { 'y', 1 } }),
+                new Summand(-1, new Dictionary<char, int>() { { 'x', 2 }, { 'y', 1 } }),
+                new Summand(2, new Dictionary<char, int>() { { 'x', 1 }, { 'z', 1 } }),
                 new Summand(0, new Dictionary<char, int>() { { 'x', 2 }, { 'z', 2 } }),
-				new Summand(-10, new Dictionary<char, int>())
-			};
+                new Summand(-10, new Dictionary<char, int>())
+            };
 
-			output = e.GenerateEquationString(summands);
-			Assert.AreEqual(output, "4x^3y - x^2y + 2xz - 10 = 0");
+            output = e.GenerateEquationString(summands);
+            Assert.AreEqual(output, "4x^3y - x^2y + 2xz - 10 = 0");
 
             output = e.GenerateEquationString(new List<Summand>(){
                 new Summand(0, new Dictionary<char, int>() { { 'x', 2 }, { 'z', 2 } })
@@ -522,15 +522,15 @@ namespace News360test.Test
             output = e.Normalize("(x - 2)((x + 5) + 4) = 0");
             Assert.AreEqual(output, "x^2 + 7x - 18 = 0");
 
-			output = e.Normalize("x = 1");
-			Assert.AreEqual(output, "x - 1 = 0");
+            output = e.Normalize("x = 1");
+            Assert.AreEqual(output, "x - 1 = 0");
 
-			output = e.Normalize("x^2 + 3.5xy + y = y^2 - xy + y");
-			Assert.AreEqual(output, "x^2 - y^2 + 4.5xy = 0");
+            output = e.Normalize("x^2 + 3.5xy + y = y^2 - xy + y");
+            Assert.AreEqual(output, "x^2 - y^2 + 4.5xy = 0");
 
-			output = e.Normalize("x - (0 - (0 - x)) = 0");
-			Assert.AreEqual(output, "0 = 0");
-		}
+            output = e.Normalize("x - (0 - (0 - x)) = 0");
+            Assert.AreEqual(output, "0 = 0");
+        }
     }
 }
 
