@@ -4,4 +4,6 @@ News360test.userprefs
 News360test.Test/bin
 News360test.Test/obj
 packages/
+equations
+*.out
 
