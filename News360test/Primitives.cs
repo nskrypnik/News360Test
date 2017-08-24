@@ -2,6 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 
+/**
+ * This file contains all primitives we use to represent an equasion.
+ * Most normalized form of equation is Expression class which contains a list
+ * of summands. Expression means the sum of all summands it contains.
+ * 
+ * Expression doesn't perform add operation so it may contains similar summands
+ * e.g. x^2 and 4x^2. The job of Expression - to parse and store summands.
+ * 
+ * Multiplier class represents any multiplying like (x + 1)(x + 2). It contains
+ * the list of parsed Expressions, e.g. in our example there're x + 1 and x + 2.
+ * 
+ * Multyplier class may be converted to Expression with ConvertToExpression function.
+ * It means that it multilies all underlying Expressions to get one resul Expression
+ * at the end. E.g. in our example we'll get resulting Expression containing
+ * x^2, 3x and 2 summands.
+ * 
+ * So while parsing we simply break equation on sub Expressions and multiply them
+ * till we get the final Expression.
+ * 
+ * The Summand class represent summands and contain data about summand coefficient
+ * variables and their powers. Also Summund class provides multiplication operand
+ * to multiply two summands and get resulting summand at the end
+ */
+
 namespace News360test
 {
 
@@ -70,6 +94,10 @@ namespace News360test
             this.summands.AddRange(expression.summands);
         }
 
+        /**
+         * More like add operation, simply adds all summands from one expression
+         * to another
+         */
         public Expression Clone()
         {
             List<Summand> clonedSummands = new List<Summand>();
@@ -128,6 +156,12 @@ namespace News360test
             return accum;
         }
 
+        /**
+         * This implements multiplying of two expressions, more like if we
+         * multiply two expressions in brackets e.g.
+         * 
+         *  (x + 5)(y + 6)
+         */
         public Expression MultiplyExpressions(Expression left, Expression right)
         {
             List<Summand> newSummands = new List<Summand>();
@@ -172,9 +206,6 @@ namespace News360test
 
         static public Summand operator *(Summand first, Summand second)
         {
-            // it would be cool actually to override '*' operator, but when I try to
-            // do this it requires to override '+' operator as well which is something
-            // I don't like to do so I'll leave it as it is
             Dictionary<char, int> variables = new Dictionary<char, int>();
             double coeff = first.coeff * second.coeff;
             foreach (Summand multipliee in new List<Summand>{first, second })

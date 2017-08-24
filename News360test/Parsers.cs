@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 
+/**
+ * There're two parsers implemented for Expressions i.e. expressions like
+ * 
+ * p1 + p2 + p3
+ * 
+ * where p1 - may be summand or product of summand and other Expression.
+ * 
+ * and for Multipliers i.e. expressions like
+ * 
+ * p1p2p3 where p1, p2 ... - expressions
+ * 
+ * Parsers are simple FSM going trough string and parsing parameters we need
+ */
+
 namespace News360test
 {
 	public class RawExpressionParser

@@ -6,21 +6,23 @@ namespace News360test
 	class MainClass
 	{
 
-		public static void Main(string[] args)
-		{
+        public static void Main(string[] args)
+        {
             string filename;
             EquationNormalizer normalizer = new EquationNormalizer();
 
             // check parameters
             if (args.Length > 0) {
                 filename = args[0];
+                // load from file mode
                 MainClass.LoadFromFile(filename, normalizer);
             }
             else
             {
+                // interractive mode
                 MainClass.StartInteractive(normalizer);
             }
-		}
+        }
 
         private static void LoadFromFile(string filename, EquationNormalizer normalizer)
         {
